@@ -1,0 +1,28 @@
+{
+    "name": "ernestas.kvedaras/cathode-ray-tube-kata",
+    "type": "project",
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.13",
+        "webmozart/assert": "^1.11",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "EKvedaras\\CathodeRayTubeKata\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "authors": [
+        {
+            "name": "Ernestas Kvedaras",
+            "email": "kvedarasernestas@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,1 @@
+https://www.notion.so/superscript/Cathode-Ray-Tube-471e622cb0074b90bb481e37d97a791c?pvs=4
