@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace EKvedaras\CathodeRayTube\Assembly;
+namespace EKvedaras\CathodeRayTube\Program;
 
-use EKvedaras\CathodeRayTube\Assembly\Instructions\Add;
-use EKvedaras\CathodeRayTube\Assembly\Instructions\Instruction;
-use EKvedaras\CathodeRayTube\Assembly\Instructions\Noop;
-use EKvedaras\CathodeRayTube\CPU;
-use EKvedaras\CathodeRayTube\RegisterKey;
+use EKvedaras\CathodeRayTube\Program\Instructions\AddX;
+use EKvedaras\CathodeRayTube\Program\Instructions\Instruction;
+use EKvedaras\CathodeRayTube\Program\Instructions\Noop;
+use EKvedaras\CathodeRayTube\CPU\CPU;
 use InvalidArgumentException;
 
 final readonly class Program
@@ -34,13 +33,13 @@ final readonly class Program
 
         return new self(...array_values(array_map(
             function (string $line, int $lineNumber) {
-                [$instruction, $argument] = explode(' ', trim($line));
+                $params = explode(' ', trim($line));
+                $instruction = array_shift($params);
 
-                return match (substr($instruction, 0, 3)) {
-                    'noo' => new Noop(),
-                    'add' => new Add(
-                        register: RegisterKey::from(substr($instruction, 3)),
-                        value: (int) $argument,
+                return match ($instruction) {
+                    'noop' => new Noop(),
+                    'addx' => new AddX(
+                        value: (int) array_shift($params),
                     ),
                     default => throw new InvalidArgumentException("Invalid instruction [$instruction] at line [$lineNumber]: $line"),
                 };

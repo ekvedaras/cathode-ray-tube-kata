@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace EKvedaras\CathodeRayTube\Assembly\Instructions;
+namespace EKvedaras\CathodeRayTube\Program\Instructions;
 
-use EKvedaras\CathodeRayTube\CPU;
+use EKvedaras\CathodeRayTube\CPU\CPU;
 
 interface Instruction
 {

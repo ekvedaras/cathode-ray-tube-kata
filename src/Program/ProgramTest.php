@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-use EKvedaras\CathodeRayTube\Assembly\Program;
-use EKvedaras\CathodeRayTube\CPU;
-use EKvedaras\CathodeRayTube\Register;
-use EKvedaras\CathodeRayTube\RegisterKey;
+use EKvedaras\CathodeRayTube\Program\Program;
+use EKvedaras\CathodeRayTube\CPU\CPU;
+use EKvedaras\CathodeRayTube\CPU\Debugger\EnabledDebugger;
+use EKvedaras\CathodeRayTube\CPU\Register;
 
 it('runs program correctly', function (string $sourceCode, int $cyclesToRunFor, array $expectedXAtSpecificCycles) {
     $program = Program::load($sourceCode);
-    $cpu = new CPU();
+    $debugger = new EnabledDebugger();
+    $cpu = new CPU(debugger: $debugger);
+
+//    $debugger->evaluateOnEveryTick(function (Job $pendingJob) {
+//        /** @var CPU $this */
+//        dump("$this->currentCycle: x [{$this->x->value}] -> $pendingJob");
+//    });
 
     foreach ($expectedXAtSpecificCycles as $cycleExpectation) {
-        foreach ($cycleExpectation['registers'] as $registerKey => $registerExpectation) {
-            if (isset($registerExpectation['start'])) {
-                $cpu->runAtStart(ofCycle: $cycleExpectation['cycle'], command: function () use ($cycleExpectation, $registerKey, $registerExpectation) {
-                    /** @var CPU $this */
-                    expect($this->$registerKey)->toEqual(new Register((int) $registerExpectation['start']), "Register $registerKey value at the start of cycle {$cycleExpectation['cycle']} is not as expected");
-                });
-            }
-
-            if (isset($registerExpectation['end'])) {
-                $cpu->runAtEnd(ofCycle: $cycleExpectation['cycle'], command: function () use ($cycleExpectation, $registerKey, $registerExpectation) {
-                    /** @var CPU $this */
-                    expect($this->$registerKey)->toEqual(new Register((int) $registerExpectation['end']), "Register $registerKey value at the end of cycle {$cycleExpectation['cycle']} is not as expected");
-                });
-            }
+        foreach ($cycleExpectation['registers'] as $registerKey => $expectedValue) {
+            $debugger->evaluate(expression: function () use ($cycleExpectation, $registerKey, $expectedValue) {
+                /** @var CPU $this */
+                expect($this->$registerKey)->toEqual(new Register((int)$expectedValue), "Register $registerKey value at the end of cycle {$cycleExpectation['cycle']} is not as expected");
+            }, atCycle: $cycleExpectation['cycle']);
         }
     }
 
@@ -38,13 +35,14 @@ it('runs program correctly', function (string $sourceCode, int $cyclesToRunFor, 
             addx 3
             addx -5
         Assembly,
-        5,
+        6,
         [
-            ['cycle' => 1, 'registers' => [RegisterKey::x->value => ['start' => 1, 'end' => 1]]],
-            ['cycle' => 2, 'registers' => [RegisterKey::x->value => ['start' => 1, 'end' => 1]]],
-            ['cycle' => 3, 'registers' => [RegisterKey::x->value => ['start' => 1, 'end' => 4]]],
-            ['cycle' => 4, 'registers' => [RegisterKey::x->value => ['start' => 4, 'end' => 4]]],
-            ['cycle' => 5, 'registers' => [RegisterKey::x->value => ['start' => 4, 'end' => -1]]],
+            ['cycle' => 1, 'registers' => ['x' => 1]],
+            ['cycle' => 2, 'registers' => ['x' => 1]],
+            ['cycle' => 3, 'registers' => ['x' => 1]],
+            ['cycle' => 4, 'registers' => ['x' => 4]],
+            ['cycle' => 5, 'registers' => ['x' => 4]],
+            ['cycle' => 6, 'registers' => ['x' => -1]],
         ],
     ],
     'long example' => [
@@ -198,9 +196,12 @@ it('runs program correctly', function (string $sourceCode, int $cyclesToRunFor, 
         Assembly,
         220,
         [
-            ['cycle' => 20, 'registers' => [RegisterKey::x->value => ['start' => 21]]],
-//            ['cycle' => 60, 'registers' => [RegisterKey::x->value => ['start' => 19]]],
-//            ['cycle' => 100, 'registers' => [RegisterKey::x->value => ['start' => 18]]],
-        ]
+            ['cycle' => 20, 'registers' => ['x' => 21]],
+            ['cycle' => 60, 'registers' => ['x' => 19]],
+            ['cycle' => 100, 'registers' => ['x' => 18]],
+            ['cycle' => 140, 'registers' => ['x' => 21]],
+            ['cycle' => 180, 'registers' => ['x' => 16]],
+            ['cycle' => 220, 'registers' => ['x' => 18]],
+        ],
     ]
 ]);
