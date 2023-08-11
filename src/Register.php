@@ -7,12 +7,7 @@ namespace EKvedaras\CathodeRayTube;
 final class Register
 {
     public function __construct(
-        private int $value = 1,
+        public int $value = 1,
     ) {
-    }
-
-    public function add(int $value): void
-    {
-        $this->value += $value;
     }
 }
