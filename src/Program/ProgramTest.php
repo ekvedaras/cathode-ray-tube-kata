@@ -5,10 +5,10 @@ declare(strict_types=1);
 use EKvedaras\CathodeRayTube\CPU\CPU;
 use EKvedaras\CathodeRayTube\CPU\Debugger;
 use EKvedaras\CathodeRayTube\CPU\Register;
-use EKvedaras\CathodeRayTube\Program\Program;
+use EKvedaras\CathodeRayTube\Program\InstructionSet;
 
 it('runs program correctly', function (string $sourceCode, int $cyclesToRunFor, array $expectedXAtSpecificCycles) {
-    $program = Program::load($sourceCode);
+    $program = InstructionSet::load($sourceCode);
     $cpu = new CPU();
     $debugger = new Debugger();
     $debugger->attach(to: $cpu);
