@@ -34,9 +34,13 @@ test('add adds to X register and takes two cycles to complete', function () {
 
 it('can tick until buffer is empty', function () {
     $cpuA = new CPU();
+    $cpuA->add(RegisterKey::x, 0);
+    $cpuA->add(RegisterKey::x, 0);
+    $cpuA->add(RegisterKey::x, 0);
     $cpuA->tickUntilBufferIsEmpty();
 
     $cpuB = new CPU();
+    $cpuB->tick();
     $cpuB->tick();
     $cpuB->tick();
     $cpuB->tick();

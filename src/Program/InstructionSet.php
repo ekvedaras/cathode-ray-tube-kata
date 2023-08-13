@@ -25,6 +25,8 @@ final readonly class InstructionSet implements Program
         foreach ($this->instructions as $instruction) {
             $instruction->run($on);
         }
+
+        $on->tickUntilBufferIsEmpty();
     }
 
     public static function load(string $sourceCode): self

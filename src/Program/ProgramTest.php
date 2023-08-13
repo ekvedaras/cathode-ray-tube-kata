@@ -28,7 +28,6 @@ it('runs program correctly', function (string $sourceCode, array $expectedXAtSpe
     }
 
     $program->run($cpu);
-    $cpu->tickUntilBufferIsEmpty();
 })->with([
     'short explanatory example' => [
         <<<'Assembly'
