@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-use EKvedaras\CathodeRayTube\Program\Program;
 use EKvedaras\CathodeRayTube\CPU\CPU;
-use EKvedaras\CathodeRayTube\CPU\Debugger\EnabledDebugger;
+use EKvedaras\CathodeRayTube\CPU\Debugger;
 use EKvedaras\CathodeRayTube\CPU\Register;
+use EKvedaras\CathodeRayTube\Program\Program;
 
 it('runs program correctly', function (string $sourceCode, int $cyclesToRunFor, array $expectedXAtSpecificCycles) {
     $program = Program::load($sourceCode);
-    $debugger = new EnabledDebugger();
-    $cpu = new CPU(debugger: $debugger);
+    $cpu = new CPU();
+    $debugger = new Debugger();
+    $debugger->attach(to: $cpu);
 
 //    $debugger->evaluateOnEveryTick(function (Job $pendingJob) {
 //        /** @var CPU $this */

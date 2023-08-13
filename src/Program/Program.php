@@ -20,10 +20,10 @@ final readonly class Program
         $this->instructions = $instructions;
     }
 
-    public function run(CPU $cpu): void
+    public function run(CPU $on): void
     {
         foreach ($this->instructions as $instruction) {
-            $instruction->run($cpu);
+            $instruction->run($on);
         }
     }
 
