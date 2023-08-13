@@ -18,4 +18,9 @@ final class Buffer
     {
         return array_shift($this->jobs);
     }
+
+    public function isNotEmpty(): bool
+    {
+        return ! empty($this->jobs);
+    }
 }

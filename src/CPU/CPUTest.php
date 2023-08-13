@@ -32,9 +32,9 @@ test('add adds to X register and takes two cycles to complete', function () {
     expect($x)->toEqual(new Register(6));
 });
 
-it('can tick until given cycle', function () {
+it('can tick until buffer is empty', function () {
     $cpuA = new CPU();
-    $cpuA->tickUntil(5);
+    $cpuA->tickUntilBufferIsEmpty();
 
     $cpuB = new CPU();
     $cpuB->tick();

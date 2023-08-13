@@ -49,7 +49,7 @@ final class CPU
 
         if ($job) {
             foreach ($this->watchers as $watcher) {
-                $watcher($job, $this->currentCycle);
+                $watcher($job, $this->currentCycle, $this->x->value);
             }
 
             $job->run(on: $this);
@@ -58,9 +58,9 @@ final class CPU
         $this->currentCycle++;
     }
 
-    public function tickUntil(int $cycle): void
+    public function tickUntilBufferIsEmpty(): void
     {
-        while ($this->currentCycle <= $cycle) {
+        while ($this->buffer->isNotEmpty()) {
             $this->tick();
         }
     }
