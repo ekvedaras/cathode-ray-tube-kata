@@ -1,5 +1,6 @@
 <?php
 
+use EKvedaras\CathodeRayTube\AsciiSequenceAwareBufferedOutput;
 use EKvedaras\CathodeRayTube\CommunicationsDevice;
 use EKvedaras\CathodeRayTube\CPU\CPU;
 use EKvedaras\CathodeRayTube\CRT\ConsoleScreen;
@@ -9,11 +10,9 @@ use EKvedaras\CathodeRayTube\Program\Drawing\DrawBasedOnSpritePosition;
 use EKvedaras\CathodeRayTube\Program\Drawing\SpritePosition\Sprite;
 use EKvedaras\CathodeRayTube\Program\Drawing\SpritePosition\SpritePosition;
 use EKvedaras\CathodeRayTube\Program\InstructionSet;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 it('can draw a picture on CRT display using sprite and its position', function (string $sourceCode, Dimensions $screenDimensions, string $sprite, string $expectedImage) {
-//    $output = new BufferedOutput();
-    $output = new \Symfony\Component\Console\Output\ConsoleOutput();
+    $output = new AsciiSequenceAwareBufferedOutput($screenDimensions->width);
     $cpu = new CPU();
     $crt = new CRT(
         screenPlate: new ConsoleScreen(
