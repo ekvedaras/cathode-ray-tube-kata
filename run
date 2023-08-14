@@ -3,6 +3,7 @@
 
 use EKvedaras\CathodeRayTube\CommunicationsDevice;
 use EKvedaras\CathodeRayTube\CPU\CPU;
+use EKvedaras\CathodeRayTube\CPU\Throttle;
 use EKvedaras\CathodeRayTube\CRT\ConsoleScreen;
 use EKvedaras\CathodeRayTube\CRT\CRT;
 use EKvedaras\CathodeRayTube\CRT\Dimensions;
@@ -16,6 +17,10 @@ require_once 'vendor/autoload.php';
 
 $output = new ConsoleOutput();
 $cpu = new CPU();
+
+$throttle = new Throttle(microseconds: 10_000);
+$throttle->attach(to: $cpu);
+
 $crt = new CRT(
     screenPlate: new ConsoleScreen(
         dimensions: new Dimensions(40, 6),
@@ -185,3 +190,5 @@ $program = new DrawBasedOnSpritePosition(
 );
 
 $device->run($program);
+
+$output->write("\n");

@@ -14,8 +14,8 @@ final readonly class Position
         Assert::greaterThanEq($this->y, 0);
     }
 
-    public function asAsciiSequence(): string
+    public function asAsciiSequence(): AsciiPositionSequence
     {
-        return "\e[$this->y;{$this->x}H";
+        return new AsciiPositionSequence($this);
     }
 }
