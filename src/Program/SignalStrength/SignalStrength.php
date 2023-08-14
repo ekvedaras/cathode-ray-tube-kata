@@ -19,7 +19,7 @@ final class SignalStrength implements Program
 
     public function run(CPU $on): void
     {
-        $on->watch(function (Job $job, int $currentCycle, int $x) {
+        $on->prependWatcher(function (Job $job, int $currentCycle, int $x) {
             if (Cycle::fromInt($currentCycle)->contributesToSignalStrength()) {
                 $this->signalStrength += $x * $currentCycle;
             }

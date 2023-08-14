@@ -17,7 +17,6 @@ final class AsciiSequenceAwareBufferedOutput extends Output
         parent::__construct($verbosity, $decorated, $formatter);
     }
 
-
     public function fetch(): string
     {
         $content = $this->buffer;
@@ -54,7 +53,7 @@ final class AsciiSequenceAwareBufferedOutput extends Output
         $matches = [];
         preg_match('/\\e\[(\d+);(\d+)H/', $message, $matches);
 
-        $position = new Position(x: (int) $matches[1], y: (int) $matches[0]);
+        $position = new Position(x: (int) $matches[2] - 1, y: (int) $matches[1] - 1);
 
         return $position->linear(width: $this->screenWidth);
     }

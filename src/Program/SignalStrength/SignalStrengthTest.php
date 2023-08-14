@@ -14,6 +14,8 @@ it('calculates signal strength', function (string $sourceCode, int $expectedSign
 
     $program->run(on: $cpu);
 
+    $cpu->tickUntilBufferIsEmpty();
+
     expect($program->output())->toEqual($expectedSignalStrength);
 })->with([
     'long example' => [

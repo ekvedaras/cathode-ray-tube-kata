@@ -20,8 +20,8 @@ final readonly class DrawBasedOnSpritePosition implements Program
 
     public function run(CPU $on): void
     {
-        $on->watch(function (Job $job, int $currenCycle) {
-            if ($this->spritePositionProgram->isSpriteVisibleAt(x: $currenCycle)) {
+        $on->prependWatcher(function (Job $job, int $currenCycle) {
+            if ($this->spritePositionProgram->isSpriteVisibleAt(x: $this->crt->column())) {
                 $this->crt->activateForOneCycle();
             }
         });

@@ -16,7 +16,7 @@ final class Debugger
 
     public function attach(CPU $to): void
     {
-        $to->watch(function (Job $pendingJob, int $currentCycle) use ($to) {
+        $to->prependWatcher(function (Job $pendingJob, int $currentCycle) use ($to) {
             foreach ($this->evaluateOnEveryTick as $expression) {
                 $expression->call($to, $pendingJob);
             }

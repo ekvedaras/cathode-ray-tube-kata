@@ -15,7 +15,7 @@ final readonly class CommunicationsDevice
         private CRT $display,
     ) {
         // Sync CPU and CRT clocks
-        $this->cpu->watch(fn () => $this->display->tick());
+        $this->cpu->prependWatcher(fn () => $this->display->tick());
     }
 
     public function run(Program $program): void

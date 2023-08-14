@@ -28,6 +28,10 @@ final class CRT
         }
 
         $this->cycle++;
+        if ($this->row() >= $this->screenPlate->dimensions()->height) {
+            $this->cycle = 0;
+        }
+
         $this->active = false;
     }
 
@@ -39,13 +43,17 @@ final class CRT
         );
     }
 
-    private function column(): int
+    public function column(): int
     {
+        if ($this->cycle < $this->screenPlate->dimensions()->width) {
+            return $this->cycle;
+        }
+
         return $this->cycle % $this->screenPlate->dimensions()->width;
     }
 
     private function row(): int
     {
-        return (int) floor($this->cycle / $this->screenPlate->dimensions()->width) % $this->screenPlate->dimensions()->height;
+        return (int) floor($this->cycle / $this->screenPlate->dimensions()->width);
     }
 }

@@ -21,6 +21,6 @@ final readonly class Position
 
     public function linear(int $width): int
     {
-        return $this->y * $width + (int) floor($this->x / $width);
+        return $this->y * $width + $this->y + $this->x;
     }
 }

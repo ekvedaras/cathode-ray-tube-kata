@@ -38,9 +38,9 @@ final class CPU
         $this->tick();
     }
 
-    public function watch(Closure $using): void
+    public function prependWatcher(Closure $using): void
     {
-        $this->watchers[] = $using;
+        array_unshift($this->watchers, $using);
     }
 
     public function tick(): void

@@ -12,6 +12,6 @@ final readonly class Throttle
 
     public function attach(CPU $to): void
     {
-        $to->watch(function () { usleep($this->microseconds); });
+        $to->prependWatcher(function () { usleep($this->microseconds); });
     }
 }

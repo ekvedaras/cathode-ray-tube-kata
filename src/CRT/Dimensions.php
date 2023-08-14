@@ -27,11 +27,11 @@ final class Dimensions implements Iterator
     {
         $this->position = new Position($this->current()->x + 1, $this->current()->y);
 
-        if ($this->position->x > $this->width) {
+        if ($this->position->x >= $this->width) {
             $this->position = new Position(0, $this->position->y + 1);
         }
 
-        if ($this->position->y > $this->height) {
+        if ($this->position->y >= $this->height) {
             $this->position = null;
         }
     }

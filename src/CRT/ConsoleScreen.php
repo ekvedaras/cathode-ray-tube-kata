@@ -23,7 +23,7 @@ final readonly class ConsoleScreen implements Screen
         $lastY = 0;
 
         // Clear the screen and put cursor at 0x0
-        $this->output->write("\e[2J\e[0;0H");
+        $this->output->write("\e[2J\e[1;1H");
 
         // Fill with dark pixels
         foreach ($this->dimensions as $position) {

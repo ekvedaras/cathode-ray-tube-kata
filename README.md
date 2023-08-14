@@ -1,1 +1,20 @@
-https://www.notion.so/superscript/Cathode-Ray-Tube-471e622cb0074b90bb481e37d97a791c?pvs=4
+https://adventofcode.com/2022/day/10
+
+## Running
+
+```shell
+./run inputs/square.txt
+```
+
+```shell
+./run inputs/demo.txt
+```
+
+```shell
+./run inputs/input.txt
+```
+
+Run with throttle
+```shell
+./run inputs/square.txt 200000
+```

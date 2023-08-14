@@ -12,8 +12,18 @@ final readonly class AsciiPositionSequence implements Stringable
     {
     }
 
+    public function column(): int
+    {
+        return $this->position->x + 1;
+    }
+
+    public function line(): int
+    {
+        return $this->position->y + 1;
+    }
+
     public function __toString(): string
     {
-        return "\e[{$this->position->y};{$this->position->x}H";
+        return "\e[{$this->line()};{$this->column()}H";
     }
 }
